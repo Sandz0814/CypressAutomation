@@ -1,4 +1,4 @@
-name: CypressAutomationTesting
+name: CI
 
 on:
   push:
@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '20.9.0'
 
@@ -25,6 +25,16 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v2
+        run: npx cypress run
+        continue-on-error: true
+        env:
+          CYPRESS_BASE_URL: https://CyppressAutomationTestingBySandro.com  # Set your app's base URL here
+
+      - name: Generate test report
+        run: npx cypress run --reporter junit --reporter-options "mochaFile=results/my-test-output.xml"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
         with:
-          build: npm run build
+          name: cypress-test-results
+          path: results/
