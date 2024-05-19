@@ -21,20 +21,33 @@ jobs:
         with:
           node-version: '20.9.0'
 
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: C:/Users/runneradmin/AppData/Local/Cypress/Cache
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+
       - name: Install dependencies
         run: npm install
 
+      - name: Install Cypress
+        run: npx cypress install
+
+      - name: Verify Cypress Installation
+        run: npx cypress verify
+
       - name: Run Cypress tests
         run: npx cypress run
-        continue-on-error: true
         env:
-          CYPRESS_BASE_URL: https://CyppressAutomationTestingBySandro.com  # Set your app's base URL here
+          CYPRESS_BASE_URL: https://CypressBySandro.com
 
       - name: Generate test report
-        run: npx cypress run --reporter junit --reporter-options "mochaFile=results/my-test-output.xml"
+        run: npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/results,overwrite=false,html=false,json=true"
 
       - name: Upload test results
         uses: actions/upload-artifact@v3
         with:
           name: cypress-test-results
-          path: results/
+          path: cypress/results/
