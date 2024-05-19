@@ -1,4 +1,4 @@
-name: CI
+name: End-to-end tests
 
 on:
   push:
@@ -13,41 +13,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.9.0'
-
-      - name: Cache Cypress binary
-        uses: actions/cache@v3
-        with:
-          path: C:/Users/runneradmin/AppData/Local/Cypress/Cache
-          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-cypress-
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install Cypress
-        run: npx cypress install
-
-      - name: Verify Cypress Installation
-        run: npx cypress verify
-
-      - name: Run Cypress tests
-        run: npx cypress run
-        env:
-          CYPRESS_BASE_URL: https://CypressBySandro.com
-
-      - name: Generate test report
-        run: npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/results,overwrite=false,html=false,json=true"
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: cypress-test-results
-          path: cypress/results/
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+      
