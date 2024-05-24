@@ -1,0 +1,28 @@
+/*
+
+// Setting Up Cypress
+npm -i init
+npm install cypress --save -dev : Installing cypress
+node_modules/.bin/cypress open 
+
+
+// Terminal command in running specs
+npx cypress open :  It will open the cypress IDE
+npx cypress run : It will run in the default browser headless and Run all the files
+npx cypress run -- headed : It will run on the default browser with UI and Run all the files
+npx cypress run --browser chrome : It will run on the selected browser like chrome headless
+npx cypress run --browser chrome --headed : It will run on the selected browser like chrome headead
+npx cypress run --spec cypress\e2e\MyFirstTesting.cy.js :  It willRun specific specs
+
+
+
+
+// Packacge need to install --- Plugins
+npm install --save-dev cypress-file-upload :  Install the Upload file plugins
+npm install --save-dev @4tw/cypress-drag-drop : Install the drag and drop plugins
+npm install -D cypress-iframe : Install the Iframe Plugins
+npm install -D cypress-xpath : Install the Xpath Plugins
+
+
+
+*/
